@@ -5,9 +5,466 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Furniture Shop</title>
     <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+  
   </head>
 
   <body>
-    <div></div>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <div class="content" id="app">
+      <header>
+        <div class="size-container">
+          <div class="header-container">
+            <div class="logo-container">Funiro.</div>
+            <div class="navigation-container">
+              <div class="dropdown">
+                <div class="dropdown-container">
+                  <button class="navigation-button-menu-first">Products<img src="/images/arrow-down-black.svg" alt="arrow-down" /></button>
+                </div>
+                <div class="dropdown-content">
+                  <a href="#">product 1</a>
+                  <a href="#">product 2</a>
+                  <a href="#">product 3</a>
+                </div>
+              </div>
+              <div class="dropdown">
+                <div class="dropdown-container">
+                  <button class="navigation-button-menu">Rooms<img src="/images/arrow-down-black.svg" alt="arrow-down" /></button>
+                </div>
+                <div class="dropdown-content">
+                  <a href="#">room 1</a>
+                  <a href="#">room 2</a>
+                  <a href="#">room 3</a>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="navigation-button-menu">Inspirations</button>
+              </div>
+            </div>
+            <div class="input-navigation-container">
+              <input
+                class="input-navigation"
+                type="text"
+                placeholder="Search for minimalist chair"
+              /> 
+            </div>
+            <div class="icons-container">
+              <button class="header-link-like">
+                <img src="/images/heart.svg" alt="like" />
+                <p>({{ like.length }})</p>
+              </button>
+              <button class="header-link-cart" @click="isCartShown">
+                <img src="/images/cart.svg" alt="cart" />
+                <p>({{ cart.length }})</p>
+              </button>
+              <div>
+
+              </div>
+              <button class="header-link-user">
+                <img src="/images/user.png" alt="user" />
+              </button>
+            </div>
+
+
+            <div class="cart-container" v-if="cartShown" v-for="(item) in products">
+              
+              <div class="item-cart-container">
+                <div class="cart-title">Cart</div>
+                <div class="cart-item">
+                  <img :src="item.smallImage" :alt="index" />
+                  <div class="cart-item-information">
+                    <div class="product-name">
+                      {{ item.title }}
+                      <div class="del-cart-button-container">
+                        <button class="del-cart-button"><img src="/images/del-button.svg"></button>
+                      </div>
+                    </div>
+                    <div class="cart-price">Rp {{ item.price.toLocaleString()}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cart-button-continue-container">
+                <button class="cart-button-continue">Continue</button>
+              </div>
+            </div>
+
+
+            <!--
+               <div class="cart-container" v-if="cartShown">
+              <div class="cart-title">Cart</div>
+              <div class="item-cart-container">
+                <div class="cart-item">
+                  <img src="/images/cart-image-1.png" alt="">
+                  <div class="cart-item-information">
+                    <div class="product-name">
+                      Slytherine
+                      <div class="del-cart-item">
+                        <img src="/images/del-button.svg" alt="">
+                      </div>
+                    </div>
+                    <div class="cart-price">Rp 250.000</div>
+                  </div>
+                </div>
+              </div>
+              <div class="cart-button-continue-container">
+                <button class="cart-button-continue">Continue</button>
+              </div>
+            </div>
+            -->
+
+          </div>
+
+          <div class="hero-container">
+            <div class="shop-item" v-for="(item, index) in shopNow"
+            v-show="isShopNowVisible(index) || isShopNowPrevVisible(index) || isShopNowNextVisible(index)"
+            :class="{ active: isShopNowVisible(index),  prev: isShopNowPrevVisible(index),  next: isShopNowNextVisible(index)}" >
+              <img :src="item.image" :alt="index" />
+              <div class="model-button-container">
+                <div v-if="isShopNowVisible(index)" class="link-product-model">
+                  <a class="model-link" href="">
+                    <h3>{{item.title}}</h3>
+                  </a>
+                  <div class="model-link-description">{{item.about}}</div>
+                  <div class="model-link-price-arrow">
+                    <div>{{item.price}}</div>
+                    <div class="arrow-enter">
+                      <a class="arrow-enter-link" href=""
+                        ><img src="/images/arrow-right.svg" alt=""
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-container">
+              <div class="about-container-text">
+                <h2>High-Quality Furniture Just For You</h2>
+                <div class="text-about">
+                  Our furniture is made from selected and best quality materials
+                  that are suitable for your dream home
+                </div>
+              </div>
+              <div class="shop-now-button-container">
+                <a href="#shopNow" class="shop-now-link">
+                  <button class="shop-now-button">
+                    Shop now
+                  </button> 
+                </a>
+              </div>
+            </div>
+
+            <div class="center-main">
+              <div class="scroll-photo-container">
+                <div class="scroll-photo-navigation">
+                  <div class="arrow-container-scroll">
+                    <div class="scroll-photo-dots-container" v-for="index in totalShopNowPages" :class="{ active: index -1 === activeShopNowPage}" @click="selectShopNowPage(index)" :key="index"> 
+                      <div class="scroll-photo-dots-item">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="arrow-container-scroll">
+                  <div class="left-arrow-container">
+                    <button class="left-arrow" @click="decreaseShopNowPage">
+                      <img class="arrow-left-header" src="/images/w-a-left.svg" alt="">
+                    </button>
+                  </div>
+                  <div class="right-arrow-container" @click="increaseShopNowPage">
+                    <button class="right-arrow">
+                      <img class="arrow-right-header" src="/images/w-a-right.svg" alt="">
+                    </button>
+                  </div>
+                </div>
+             </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="size-container" id="shopNow">
+        <div class="description-container">
+          <div class="icons-container">
+            <img src="images/high-logo.svg" alt="" />
+            <div class="big-small-container">
+              <div class="description-container-big">High Quality</div>
+              <div class="description-container-small">Crafted from top materials</div>
+            </div>
+          </div>
+  
+          <div class="icons-container">
+            <img src="/images/warrany.svg" alt="" />
+            <div class="big-small-container">
+              <div class="description-container-big">Warrany Protection</div>
+              <div class="description-container-small">Over 2 years</div>
+            </div>
+          </div>
+  
+          <div class="icons-container">
+            <img src="images/shipping.svg" alt="" />
+            <div class="big-small-container">
+              <div class="description-container-big">Free Shipping</div>
+              <div class="description-container-small">Order over 150$</div>
+            </div>
+          </div>
+  
+          <div class="icons-container">
+            <img src="images/support.svg" alt="" />
+            <div class="big-small-container">
+              <div class="description-container-big">24/7 Support</div>
+              <div class="description-container-small">Dedicated support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <main>
+       <div class="size-container">
+        <div class="title-container-first">Our Products</div>
+        <div class="line-products">
+          <div class="main-product-container" v-for="item in visibleProducts">
+            <img :src="item.image" alt="first-image" />
+            <div class="sale-container">
+              <div class="sale" v-if="item.oldPrice">
+                <div class="sale-text">-{{(100-(item.price / item.oldPrice) * 100).toFixed(0)}}%</div>
+              </div>
+              <div class="sale-new" v-if="item.isNew">
+                <div class="sale-text">New</div>
+              </div>
+            </div>
+           
+            <div class="text-description-image">
+              <p class="main-paragraph">{{ item.title }}</p>
+              <p class="main-paragraph-light">{{ item.about }}</p>
+              <div class="main-price-sale">
+                <p class="main-paragraph-price">Rp {{ item.price.toLocaleString() }}</p>
+                <p class="main-paragraph-price-del" v-if="item.oldPrice"><s>Rp {{ item.oldPrice.toLocaleString()}}</s></p>
+              </div>
+            </div>
+
+            <div class="main-product-hovered main-product-container-hidden">
+              <div class="main-hidden-button-container"> 
+                <button class="main-hidden-button" @click="addToCart(item.id, item.title)">Add to cart</button>
+              </div>
+              <div class="main-hidden-link-container">
+                <div class="main-hidden-link">
+                  <button class="main-like-button" >
+                    <img src="/images/share.svg" alt="">
+                    <p>Share</p> 
+                  </button>
+                </div>
+                <div class="main-hidden-link">
+                  <button class="main-like-button" @click="addLike(item.id, item.title)">
+                    <img src="/images/like.svg" alt="">
+                    <p>Like</p> 
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="show-more-container">
+          <button class="show-more-button" v-if="products.length > visibleProductsCount" @click="showMoreProducts">Show More</button>
+        </div>
+      </div>
+
+          <div class="room-inspirations">
+            <div class="room-inspirations-text">
+              <div class="about-container-text">
+                <div class="h2-container-main">
+                  50+ Beautiful rooms inspirations
+                </div>
+                <div class="text-about">
+                  Our designer already made a lot of beautiful prototype of rooms
+                  that inspire you
+                </div>
+              </div>
+              <button class="explore-more-button">Explore More</button>
+            </div>
+            <div class="room-inspirations-images">
+              <div class="room-inspirations-first">
+                <img src="/images/first-image-room.png" alt="" />
+                <div class="link-inner-peace">
+                  <div class="model-link-description">01 ---- Bed Room</div>
+                  <a class="model-link" href=""><h3>Inner Peace</h3></a>
+                  <div class="room-link-container">
+                    <div class="room-arrow">
+                      <a class="room-arrow-link" href=""
+                        ><img src="/images/arrow-right-white.svg" alt=""
+                      /></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="room-inspirations-second">
+                <div class="second-image-room">
+                  <img src="/images/second-image-room.png" alt="" />
+                </div>
+                <div class="scroll-ball-second">
+                  <div class="scroll-dots-container-first">
+                    <div class="scroll-dots-container-first-center"></div>
+                  </div>
+                  <div class="scroll-dots-container"></div>
+                  <div class="scroll-dots-container"></div>
+                  <div class="scroll-dots-container"></div>
+                </div>
+                <div class="right-button-scroll-container">
+                  <button class="right-button-scroll">
+                    <img src="/images/arrow-right-orange.svg" alt="">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        
+        <div class="size-container">
+          <div class="tips-container">
+            <div class="title-container">Tip's & Tricks</div>
+            <div class="main-tips-container">
+              
+              <div class="scroll-button-container">
+                <button class="scroll-button-arrow-left" @click="decreaseTipPage">
+                  <img src="/images/arrow-left-orange.svg" alt="">
+                </button>
+              </div> 
+
+              <div class="container tip-item" v-for="(item, index) in tips" v-show="isTipVisible(index)">
+                <img :src="item.image" alt="tips-1" />
+                <div class="tips-description-image">
+                  <p class="main-tips-paragraph">
+                    {{ item.title }}
+                  </p>
+                  <p class="main-tips-paragraph-light">{{ index }}</p>
+                </div>
+              </div>
+              
+              <div class="scroll-button-container">
+                <button class="scroll-button-arrow-right" @click="increaseTipPage">
+                  <img src="/images/arrow-right-orange.svg" alt="">
+                </button>
+              </div>
+               
+            </div>
+          </div>
+
+          <div>
+            <div class="scroll-ball-footer">
+              <div class="scroll-ball-container">
+                <div class="scroll-photo-dots-container" v-for="index in totalPages"
+                :class="{ active: index === activeTipPage}" @click="selectTipPage(index)" :key="index"> 
+                  <div class="scroll-photo-dots-item">
+                  </div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="share-container">
+          <div class="share-text-container">
+            <div class="share-p-container">Share your setup with</div>
+            <div class="bold-hashtag">#FuniroFurniture</div>
+          </div>
+        </div>
+        
+        <div class="size-container">
+          <div class="footer-container">
+            <div class="footer">
+              <div class="footer-column-element">
+                <div class="footer-name-column">Funiro</div>
+                <div class="footer-about-text">
+                  Worldwide furniture store since 2020. We sell over 1000+ branded
+                  products on our website
+                </div>
+                <div class="footer-location">
+                  <img class="data-image" src="/images/location.svg" alt=""/>
+                  <a class="footer-link-data" href=""></a>
+                  Sawojajar, Malang,
+                    Indonesia</a
+                  >
+                </div>
+                <div class="footer-number">
+                  <img class="data-image" src="/images/phone.svg" alt="phone" />
+                  <a class="footer-link-data" href="">+6289 456 3455</a>
+                </div>
+                <div class="footer-site-link">
+                  <a class="footer-link" href="">www.funiro.com</a>
+                </div>
+              </div>
+              <div class="footer-column-element">
+                <div class="footer-name-column">Menu</div>
+                <div class="footer-products">
+                  <a class="footer-link" href="">Products</a>
+                </div>
+                <div class="footer-rooms">
+                  <a class="footer-link" href="">Rooms</a>
+                </div>
+                <div class="footer-inspirations">
+                  <a class="footer-link" href="">Inspirations</a>
+                </div>
+                <div class="footer-about">
+                  <a class="footer-link" href="">About Us</a>
+                </div>
+                <div class="footer-terms-policy">
+                  <a class="footer-link" href="">Terms & Policy</a>
+                </div>
+              </div>
+              <div class="footer-column-element">
+                <div class="footer-name-column">Account</div>
+                <div class="footer-my-account">
+                  <a class="footer-link" href=""> My Account</a>
+                </div>
+                <div class="footer-checkout">
+                  <a class="footer-link" href="">Checkout</a>
+                </div>
+                <div class="footer-my-cart">
+                  <a class="footer-link" href="">My Cart</a>
+                </div>
+                <div class="footer-my-catalog">
+                  <a class="footer-link" href="">My Catalog</a>
+                </div>
+              </div>
+              <div class="footer-column-element">
+                <div class="footer-name-column">Stay Connected</div>
+                <div class="footer-facebook">
+                  <a class="footer-link" href="">Facebook</a>
+                </div>
+                <div class="footer-instagram">
+                  <a class="footer-link" href="">Instagram</a>
+                </div>
+                <div class="footer-twitter">
+                  <a class="footer-link" href="">Twitter</a>
+                </div>
+              </div>
+              <div class="footer-column-element">
+                <div class="footer-name-column">Stay Updated</div>
+                <div class="footer-input-container">
+                  <input
+                  class="footer-input"
+                  type="text"
+                  placeholder="Enter your email"
+                />
+                <button class="footer-send-button"><img src="/images/send-pic.svg" alt="" /></button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        
+      </main>
+    </div>
+    <script src="./main.js"></script>
+    <script src="./mainJs.js"></script>
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
 </html>
