@@ -133,8 +133,9 @@ const app = Vue.createApp({
       if (this.activeTipPage < this.totalPages) {
         this.activeTipPage++
       } else {
-        this.activeTipPage = 0
+        this.activeTipPage = 1
       }
+
     },
     decreaseTipPage() {
       if (this.activeTipPage > 1) {
