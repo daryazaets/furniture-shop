@@ -24,7 +24,7 @@
             <div class="navigation-container">
               <div class="dropdown">
                 <div class="dropdown-container">
-                  <button class="navigation-button-menu-first">Products<img src="/images/arrow-down-black.svg" alt="arrow-down" /></button>
+                  <button class="navigation-button-menu-first">Products<img src="images/arrow-down-black.svg" alt="arrow-down" /></button>
                 </div>
                 <div class="dropdown-content">
                   <a href="#">product 1</a>
@@ -34,7 +34,7 @@
               </div>
               <div class="dropdown">
                 <div class="dropdown-container">
-                  <button class="navigation-button-menu">Rooms<img src="/images/arrow-down-black.svg" alt="arrow-down" /></button>
+                  <button class="navigation-button-menu">Rooms<img src="images/arrow-down-black.svg" alt="arrow-down" /></button>
                 </div>
                 <div class="dropdown-content">
                   <a href="#">room 1</a>
@@ -55,43 +55,43 @@
             </div>
             <div class="icons-container">
               <button class="header-link-like">
-                <img src="/images/heart.svg" alt="like" />
+                <img src="images/heart.svg" alt="like" />
                 <p>({{ like.length }})</p>
               </button>
-              <button class="header-link-cart" @click="isCartShown">
-                <img src="/images/cart.svg" alt="cart" />
+              <button class="header-link-cart" @click="toggleCard">
+                <img src="images/cart.svg" alt="cart" />
                 <p>({{ cart.length }})</p>
               </button>
               <div>
-
               </div>
               <button class="header-link-user">
-                <img src="/images/user.png" alt="user" />
+                <img src="images/user.png" alt="user" />
               </button>
             </div>
+<p></p>
 
-
-            <div class="cart-container" v-if="cartShown" v-for="(item) in products">
-              
+            <div class="cart-container" v-if="cartShown" >
+              <div class="cart-title">Cart</div>
+              <div class="item-cart-container" v-if="cardProducts.length === 0"> No items in the cart</div>
               <div class="item-cart-container">
-                <div class="cart-title">Cart</div>
-                <div class="cart-item">
-                  <img :src="item.smallImage" :alt="index" />
+                <div class="cart-item" v-for="(item,index) in cardProducts" :key="item.id">
+                  <img class="cart-item-image"  :src="item.image" :alt="index" />
                   <div class="cart-item-information">
                     <div class="product-name">
                       {{ item.title }}
                       <div class="del-cart-button-container">
-                        <button class="del-cart-button"><img src="/images/del-button.svg"></button>
+                        <button class="del-cart-button" @click="removeItemInCart(index)"><img src="images/del-button.svg"></button>
                       </div>
                     </div>
                     <div class="cart-price">Rp {{ item.price.toLocaleString()}}</div>
                   </div>
                 </div>
               </div>
-              <div class="cart-button-continue-container">
+              <div class="cart-button-continue-container" v-if="cardProducts.length > 0">
                 <button class="cart-button-continue">Continue</button>
               </div>
             </div>
+    
 
 
             <!--
@@ -99,12 +99,12 @@
               <div class="cart-title">Cart</div>
               <div class="item-cart-container">
                 <div class="cart-item">
-                  <img src="/images/cart-image-1.png" alt="">
+                  <img src="images/cart-image-1.png" alt="">
                   <div class="cart-item-information">
                     <div class="product-name">
                       Slytherine
                       <div class="del-cart-item">
-                        <img src="/images/del-button.svg" alt="">
+                        <img src="images/del-button.svg" alt="">
                       </div>
                     </div>
                     <div class="cart-price">Rp 250.000</div>
@@ -134,7 +134,7 @@
                     <div>{{item.price}}</div>
                     <div class="arrow-enter">
                       <a class="arrow-enter-link" href=""
-                        ><img src="/images/arrow-right.svg" alt=""
+                        ><img src="images/arrow-right.svg" alt=""
                       /></a>
                     </div>
                   </div>
@@ -172,12 +172,12 @@
                 <div class="arrow-container-scroll">
                   <div class="left-arrow-container">
                     <button class="left-arrow" @click="decreaseShopNowPage">
-                      <img class="arrow-left-header" src="/images/w-a-left.svg" alt="">
+                      <img class="arrow-left-header" src="images/w-a-left.svg" alt="">
                     </button>
                   </div>
                   <div class="right-arrow-container" @click="increaseShopNowPage">
                     <button class="right-arrow">
-                      <img class="arrow-right-header" src="/images/w-a-right.svg" alt="">
+                      <img class="arrow-right-header" src="images/w-a-right.svg" alt="">
                     </button>
                   </div>
                 </div>
@@ -198,7 +198,7 @@
           </div>
   
           <div class="icons-container">
-            <img src="/images/warrany.svg" alt="" />
+            <img src="images/warrany.svg" alt="" />
             <div class="big-small-container">
               <div class="description-container-big">Warrany Protection</div>
               <div class="description-container-small">Over 2 years</div>
@@ -249,18 +249,18 @@
 
             <div class="main-product-hovered main-product-container-hidden">
               <div class="main-hidden-button-container"> 
-                <button class="main-hidden-button" @click="addToCart(item.id, item.title)">Add to cart</button>
+                <button class="main-hidden-button" @click="addToCart(item.id)">Add to cart</button>
               </div>
               <div class="main-hidden-link-container">
                 <div class="main-hidden-link">
                   <button class="main-like-button" >
-                    <img src="/images/share.svg" alt="">
+                    <img src="images/share.svg" alt="">
                     <p>Share</p> 
                   </button>
                 </div>
                 <div class="main-hidden-link">
                   <button class="main-like-button" @click="addLike(item.id, item.title)">
-                    <img src="/images/like.svg" alt="">
+                    <img src="images/like.svg" alt="">
                     <p>Like</p> 
                   </button>
                 </div>
@@ -288,14 +288,14 @@
             </div>
             <div class="room-inspirations-images">
               <div class="room-inspirations-first">
-                <img src="/images/first-image-room.png" alt="" />
+                <img src="images/first-image-room.png" alt="" />
                 <div class="link-inner-peace">
                   <div class="model-link-description">01 ---- Bed Room</div>
                   <a class="model-link" href=""><h3>Inner Peace</h3></a>
                   <div class="room-link-container">
                     <div class="room-arrow">
                       <a class="room-arrow-link" href=""
-                        ><img src="/images/arrow-right-white.svg" alt=""
+                        ><img src="images/arrow-right-white.svg" alt=""
                       /></a>
                     </div>
                   </div>
@@ -303,7 +303,7 @@
               </div>
               <div class="room-inspirations-second">
                 <div class="second-image-room">
-                  <img src="/images/second-image-room.png" alt="" />
+                  <img src="images/second-image-room.png" alt="" />
                 </div>
                 <div class="scroll-ball-second">
                   <div class="scroll-dots-container-first">
@@ -315,7 +315,7 @@
                 </div>
                 <div class="right-button-scroll-container">
                   <button class="right-button-scroll">
-                    <img src="/images/arrow-right-orange.svg" alt="">
+                    <img src="images/arrow-right-orange.svg" alt="">
                   </button>
                 </div>
               </div>
@@ -330,7 +330,7 @@
               
               <div class="scroll-button-container">
                 <button class="scroll-button-arrow-left" @click="decreaseTipPage">
-                  <img src="/images/arrow-left-orange.svg" alt="">
+                  <img src="images/arrow-left-orange.svg" alt="">
                 </button>
               </div> 
 
@@ -346,7 +346,7 @@
               
               <div class="scroll-button-container">
                 <button class="scroll-button-arrow-right" @click="increaseTipPage">
-                  <img src="/images/arrow-right-orange.svg" alt="">
+                  <img src="images/arrow-right-orange.svg" alt="">
                 </button>
               </div>
                
@@ -383,14 +383,14 @@
                   products on our website
                 </div>
                 <div class="footer-location">
-                  <img class="data-image" src="/images/location.svg" alt=""/>
+                  <img class="data-image" src="images/location.svg" alt=""/>
                   <a class="footer-link-data" href=""></a>
                   Sawojajar, Malang,
                     Indonesia</a
                   >
                 </div>
                 <div class="footer-number">
-                  <img class="data-image" src="/images/phone.svg" alt="phone" />
+                  <img class="data-image" src="images/phone.svg" alt="phone" />
                   <a class="footer-link-data" href="">+6289 456 3455</a>
                 </div>
                 <div class="footer-site-link">
@@ -450,7 +450,7 @@
                   type="text"
                   placeholder="Enter your email"
                 />
-                <button class="footer-send-button"><img src="/images/send-pic.svg" alt="" /></button>
+                <button class="footer-send-button"><img src="images/send-pic.svg" alt="" /></button>
                 </div>
                 
               </div>

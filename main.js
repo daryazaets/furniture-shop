@@ -5,6 +5,7 @@ const app = Vue.createApp({
       activeInspirationsPage: 1,
       activeShopNowPage: 1,
       visibleProductsCount: 8,
+      cartItem: 0,
       active: false,
       like: [],
       cart: [],
@@ -161,17 +162,21 @@ const app = Vue.createApp({
         this.visibleProductsCount += 8
       }
     },
-    addToCart(id, title, smallImage, price) {
+
+    addToCart(id, title) {
       this.cart.push(id)
-      alert('Товар ' + title + ' добавлен в корзину!')
+      alert(`Product ${title} added to the cart!`)
     },
     addLike(id, title) {
       this.like.push(id)
-      alert('Вам понравился товар' + " " + title + '!')
+      alert(`You've liked ${title}!`)
     },
-    isCartShown() {
+    toggleCard() {
       this.cartShown = !this.cartShown
     },
+    removeItemInCart(index) {
+      this.cart.splice(index, 1);
+    }
   },
   computed: {
     totalPages() {
@@ -183,8 +188,15 @@ const app = Vue.createApp({
     totalShopNowPages() {
       return this.shopNow.length
     },
+    totalCart() {
+      return this.cart.length / 3
+    },
     visibleProducts() {
       return this.products.slice(0, this.visibleProductsCount)
-    }
+    },
+    cardProducts() {
+      const products = this.cart.map(productId => this.products.find(product => product.id === productId))
+      return products
+    },
   },
 })

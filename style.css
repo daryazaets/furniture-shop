@@ -137,12 +137,10 @@ header {
 .cart-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   position: absolute;
   width: 300px;
-  height: 450px;
   padding: 15px;
-  background-color: #ffffffe3;
+  background-color: #ffffff;
   right: 0px;
   top: 80px;
   z-index: 2;
@@ -154,10 +152,13 @@ header {
   padding: 15px;
 }
 
+.cart-item-image {
+  height: 80px;
+}
+
 .item-cart-container {
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .cart-button-continue-container {
@@ -169,6 +170,7 @@ header {
   display: flex;
   gap: 20px;
   padding: 10px;
+  min-height: 50px;
 }
 
 .product-name {
@@ -187,6 +189,7 @@ header {
 }
 
 .cart-item-information {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
