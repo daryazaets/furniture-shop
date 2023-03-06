@@ -55,7 +55,7 @@ const app = Vue.createApp({
         { image: './images/image-2.png', title: 'Leviosa', about: 'Stylish cafe chair', price: 250000, id: 2222 },
         { image: './images/image-3.png', title: 'Lolito', about: 'Luxury big sofa', oldPrice: 14000000, price: 7000000, id: 3333 },
         { image: './images/image-4.png', title: 'Respira', about: 'Minimalist fan', price: 5000000, isNew: true, id: 4444 },
-        { image: './images/image-5.png', title: 'Grifo', about: 'Night lamp', price: 1500000, id: 5555 },
+        { image: './images/image-4-1.png', title: 'Grifo', about: 'Night lamp', price: 1500000, id: 5555 },
         { image: './images/image-6.png', title: 'Muggo', about: 'Small mug', price: 150000, isNew: true, id: 6666 },
         { image: './images/image-7.png', title: 'Pingky', about: 'Cute bed set', oldPrice: 14000000, price: 7000000, id: 7777 },
         { image: './images/image-8.png', title: 'Potty', about: 'Minimalist flower pot', price: 500000, isNew: true, id: 8888, smallImage: './images/cart-image-3.png' },
