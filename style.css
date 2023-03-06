@@ -923,7 +923,7 @@ header {
 }
 
 .bold-hashtag {
-  margin-bottom: 825px;
+  margin-bottom: 20px;
   font-weight: 600;
   font-size: 40px;
 }
@@ -953,9 +953,7 @@ header {
   top: 100px;
 }
 .share-container {
-  height: 800px;
-  margin-bottom: 80px;
-  background: url(/images/share1.png) no-repeat;
+  margin-bottom: 50px;
 }
 
 .footer {
